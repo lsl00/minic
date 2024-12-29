@@ -1,0 +1,13 @@
+void matrix_mul(int m,float a[][100],float b[][10],float c[][10]){
+    int i = 0;
+    while(i < m){
+        int j = 0;
+        while(j < 10){
+            int k = 0;
+            c[i][j] = 0;
+            while(k < 100){
+                c[i][j] = c[i][j] + a[i][k]*b[k][j];
+            }
+        }
+    }
+}

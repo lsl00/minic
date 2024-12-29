@@ -1,0 +1,5 @@
+int main(){
+    int a[13] = "Hello,world!";
+    int b[3][20] = {"Hello,world!","Hello,Java","Rust is Good!"};
+    print(a);
+}

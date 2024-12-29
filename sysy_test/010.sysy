@@ -1,0 +1,9 @@
+void f(){}
+
+int main(){
+    if(f()){
+        putint(1);
+    }else{
+        putint(2);
+    }
+}

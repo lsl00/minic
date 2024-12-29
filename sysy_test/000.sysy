@@ -1,0 +1,11 @@
+int main(){
+    int a = input();
+    int b = 1;
+    b = a + (a >= 3);
+    if (2 * b >= a){
+        return a - b;
+    }else {
+        b = b + a;
+    }
+    return a * b + 5/-4;
+}
