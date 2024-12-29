@@ -76,7 +76,6 @@ std::ostream &operator<<(std::ostream &os, Token &token) {
     os << "OpOr";
     break;
 
-
   case TokenType::KW_int:
     os << "int";
     break;
@@ -165,11 +164,10 @@ Token StringToken(std::string str) {
 
 bool Token::isKind(TokenType type) { return this->type == type; }
 bool Token::isBinOp() { return ::isBinOp(this->type); }
-bool Token::isPreOp() { return ::isPreOp(this->type); }
+bool Token::isNegOp() { return ::isNegOp(this->type); }
 bool Token::isNotOp() { return ::isNotOp(this->type); }
 bool Token::isCmpOp() { return ::isCmpOp(this->type); }
 bool Token::isLogicOp() { return ::isLogicOp(this->type); }
-
 
 bool isBinOp(TokenType type) {
   switch (type) {
@@ -183,9 +181,8 @@ bool isBinOp(TokenType type) {
     return false;
   }
 }
-bool isPreOp(TokenType type) {
+bool isNegOp(TokenType type) {
   switch (type) {
-  case TokenType::OpAdd:
   case TokenType::OpSub:
     return true;
   default:
@@ -216,10 +213,10 @@ bool isLogicOp(TokenType type) {
   }
 }
 
-bool isNotOp(TokenType type){
-  if(type == TokenType::OpNot){
+bool isNotOp(TokenType type) {
+  if (type == TokenType::OpNot) {
     return true;
-  }else {
+  } else {
     return false;
   }
 }

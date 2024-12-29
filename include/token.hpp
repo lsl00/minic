@@ -5,14 +5,14 @@
 #include <variant>
 enum class TokenType {
   // Punctuations
-  LeftParen,  // '('
-  RightParen, // ')'
-  LeftBrace,  // '{'
-  RightBrace, // '}'
-  LeftBracket, // '['
+  LeftParen,    // '('
+  RightParen,   // ')'
+  LeftBrace,    // '{'
+  RightBrace,   // '}'
+  LeftBracket,  // '['
   RightBracket, // ']'
-  Semicolon,  // ';'
-  Comma, // ','
+  Semicolon,    // ';'
+  Comma,        // ','
 
   // Operators
   OpAdd,
@@ -21,18 +21,18 @@ enum class TokenType {
   OpDiv,
   OpMod,
 
-  OpEqual, //'='
+  OpEqual,      //'='
   OpEqualEqual, // '=='
 
-  OpGreater, //'>'
+  OpGreater,      //'>'
   OpGreaterEqual, // '>='
-  OpLess, // '<'
-  OpLessEqual, // '<='
-  OpNotEqual, // '!='
+  OpLess,         // '<'
+  OpLessEqual,    // '<='
+  OpNotEqual,     // '!='
 
   OpNot, // '!'
   OpAnd, // '&&'
-  OpOr, // '||'
+  OpOr,  // '||'
 
   // keywords
   KW_break,
@@ -63,7 +63,7 @@ struct Token {
 
   bool isKind(TokenType type);
   bool isBinOp();
-  bool isPreOp();
+  bool isNegOp();
   bool isNotOp();
   bool isCmpOp();
   bool isLogicOp();
@@ -78,7 +78,7 @@ Token StringToken(std::string);
 // std::string TokenType2String(TokenType type);
 
 bool isBinOp(TokenType);
-bool isPreOp(TokenType);
+bool isNegOp(TokenType);
 bool isNotOp(TokenType);
 bool isCmpOp(TokenType);
 bool isLogicOp(TokenType);

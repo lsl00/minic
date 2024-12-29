@@ -54,39 +54,39 @@ Token Lexer::NextToken() {
   case '%':
     return SimpleToken(TokenType::OpMod);
 
-  case '=':{
-    if(match('=')){
+  case '=': {
+    if (match('=')) {
       return SimpleToken(TokenType::OpEqualEqual);
     }
     return SimpleToken(TokenType::OpEqual);
   }
-  case '>':{
-    if(match('=')){
+  case '>': {
+    if (match('=')) {
       return SimpleToken(TokenType::OpGreaterEqual);
     }
     return SimpleToken(TokenType::OpGreater);
   }
-  case '<':{
-    if(match('=')){
+  case '<': {
+    if (match('=')) {
       return SimpleToken(TokenType::OpLessEqual);
     }
     return SimpleToken(TokenType::OpLess);
   }
-  case '!':{
-    if(match('=')){
+  case '!': {
+    if (match('=')) {
       return SimpleToken(TokenType::OpNotEqual);
     }
     return SimpleToken(TokenType::OpNot);
   }
-  case '&':{
+  case '&': {
     // TODO : bitwise and
-    if(match('&')){
+    if (match('&')) {
       return SimpleToken(TokenType::OpAnd);
     }
     throw format("Expect '&'.");
   }
-  case '|' : {
-    if (match('|')){
+  case '|': {
+    if (match('|')) {
       return SimpleToken(TokenType::OpOr);
     }
     throw format("Expect '|'.");
@@ -97,67 +97,68 @@ Token Lexer::NextToken() {
   default:
     break;
   }
-  if (head == '"'){
-    while (peek(0) != '"'){
+  if (head == '"') {
+    while (peek(0) != '"') {
       next();
     }
     next();
-    return StringToken(src.substr(BeginingPosition + 1, CurrentPosition-BeginingPosition-2));
+    return StringToken(src.substr(BeginingPosition + 1,
+                                  CurrentPosition - BeginingPosition - 2));
   }
   if (isalpha(head)) { // Keywords or identifier.
     while (isalpha(peek(0)) || isdigit(peek(0)))
       next();
 
     switch (head) {
-    case 'b':{
-      if(check(*this, "break", 5)) {
+    case 'b': {
+      if (check(*this, "break", 5)) {
         return SimpleToken(TokenType::KW_break);
       }
-    }break;
-    case 'c':{
-      if(check(*this, "const", 5)){
+    } break;
+    case 'c': {
+      if (check(*this, "const", 5)) {
         return SimpleToken(TokenType::KW_const);
       }
-      if(check(*this, "continue", 8)){
+      if (check(*this, "continue", 8)) {
         return SimpleToken(TokenType::KW_continue);
       }
-    }break;
-    case 'e':{
-      if (check(*this, "else", 4)){
+    } break;
+    case 'e': {
+      if (check(*this, "else", 4)) {
         return SimpleToken(TokenType::KW_else);
       }
-    }break;
-    case 'f':{
-      if(check(*this,"float",5)){
+    } break;
+    case 'f': {
+      if (check(*this, "float", 5)) {
         return SimpleToken(TokenType::KW_float);
       }
-    }break;
-    case 'i':{
+    } break;
+    case 'i': {
       if (check(*this, "int", 3)) {
         return SimpleToken(TokenType::KW_int);
       }
-      if (check(*this,"if",2)) {
+      if (check(*this, "if", 2)) {
         return SimpleToken(TokenType::KW_if);
       }
-    }break;
-    case 'r':{
+    } break;
+    case 'r': {
       if (check(*this, "return", 6)) {
         return SimpleToken(TokenType::KW_return);
       }
-    }break;
-    case 'v':{
-      if (check(*this, "void", 4)){
+    } break;
+    case 'v': {
+      if (check(*this, "void", 4)) {
         return SimpleToken(TokenType::KW_void);
       }
-    }break;
-    case 'w':{
-      if(check(*this, "while", 5)){
+    } break;
+    case 'w': {
+      if (check(*this, "while", 5)) {
         return SimpleToken(TokenType::KW_while);
       }
-    }break;
+    } break;
     }
     return IdentifierToken(
-          src.substr(BeginingPosition, CurrentPosition - BeginingPosition));
+        src.substr(BeginingPosition, CurrentPosition - BeginingPosition));
   }
 
   if (isdigit(head)) {
@@ -167,21 +168,22 @@ Token Lexer::NextToken() {
       Result = 10 * Result + (d - '0');
     }
     float fs = Result;
-    if (match('.')){
+    if (match('.')) {
       float frac = 0.1;
-      while(isdigit(peek(0))){
-        char d= next();
+      while (isdigit(peek(0))) {
+        char d = next();
         fs += frac * (d - '0');
         frac *= 0.1;
       }
-      if(peek(0) != 'e'){
+      if (peek(0) != 'e') {
         return FloatToken(fs);
       }
     }
-    if(match('e')){
-      int exp10 = 0,neg = 1;
-      if(match('-')) neg = -1;
-      while (isdigit(peek(0))){
+    if (match('e')) {
+      int exp10 = 0, neg = 1;
+      if (match('-'))
+        neg = -1;
+      while (isdigit(peek(0))) {
         char d = next();
         exp10 = 10 * exp10 + (d - '0');
       }
@@ -189,7 +191,6 @@ Token Lexer::NextToken() {
     }
     return IntegerToken(Result);
   }
-
 
   return SimpleToken(TokenType::Eof);
 }
@@ -200,8 +201,8 @@ char Lexer::peek(int step) {
   }
   return src[CurrentPosition + step];
 }
-bool Lexer::match(char c){
-  if(src[CurrentPosition] == c){
+bool Lexer::match(char c) {
+  if (src[CurrentPosition] == c) {
     CurrentPosition++;
     return true;
   }
