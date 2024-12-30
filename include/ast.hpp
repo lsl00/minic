@@ -106,15 +106,15 @@ struct VariableExpr : public Expr {
 
 struct IndexExpr : public Expr {
   string BaseArrayName;
-  shared_ptr<VariableExpr> BaseArray;
-  shared_ptr<IndexExpr> SubArray;
-  shared_ptr<Expr> Index;
+  vector<shared_ptr<Expr>> Indices;
 
-  IndexExpr(shared_ptr<VariableExpr> VE, shared_ptr<Expr> Index)
-      : BaseArrayName(VE->VariName), BaseArray(VE), Index(Index) {};
-  IndexExpr(shared_ptr<IndexExpr> SubArray, shared_ptr<Expr> Index)
-      : BaseArrayName(SubArray->BaseArrayName), SubArray(SubArray),
-        Index(Index) {};
+  IndexExpr(shared_ptr<VariableExpr> VE, shared_ptr<Expr> index)
+      : BaseArrayName(VE->VariName) {
+    Indices.push_back(index);
+  };
+  void append(shared_ptr<Expr> index){
+    Indices.push_back(index);
+  }
 
   void accept(TreeVisitor &);
 };

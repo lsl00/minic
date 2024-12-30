@@ -111,7 +111,7 @@ shared_ptr<Expr> Parser::ParseExpr(int8_t min_bp) {
         lhs = make_shared<IndexExpr>(base, index);
       } else if (auto sub = dynamic_pointer_cast<IndexExpr>(lhs);
                  lhs != nullptr) {
-        lhs = make_shared<IndexExpr>(sub, index);
+        sub->append(index);
       } else {
         throw format("Expect array or subarray in index expr.");
       }

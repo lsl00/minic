@@ -108,13 +108,12 @@ void TreePrinter::accept(LogicalExpr &LE) {
 void TreePrinter::accept(VariableExpr &ve) { std::cout << ve.VariName; }
 
 void TreePrinter::accept(IndexExpr &IE) {
-  if (IE.BaseArray)
-    IE.BaseArray->accept(*this);
-  if (IE.SubArray)
-    IE.SubArray->accept(*this);
-  std::cout << '[';
-  IE.Index->accept(*this);
-  std::cout << ']';
+  cout << IE.BaseArrayName;
+  for(int i = 0;i < IE.Indices.size();++i){
+    cout << '[';
+    IE.Indices[i]->accept(*this);
+    cout << ']';
+  }
 }
 
 void TreePrinter::accept(AssignExpr &AE) {
